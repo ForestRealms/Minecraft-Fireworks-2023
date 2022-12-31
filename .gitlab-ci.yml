@@ -24,7 +24,7 @@ development_build:       # This job runs in the build stage, which runs first.
   script:
     - mvn clean package"
     - echo "开发版本编译完成"
-  only: ["develop"]
+  only: [develop]
   tags:
     - Maven
   artifacts:
