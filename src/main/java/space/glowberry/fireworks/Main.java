@@ -1,17 +1,21 @@
 package space.glowberry.fireworks;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
+
 public final class Main extends JavaPlugin {
+    public static File DataFolder;
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        utils.OutputConsoleMessage(utils.translate("&aEnabling Minecraft Fireworks Plugin"));
+        DataFolder = getDataFolder();
 
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        utils.OutputConsoleMessage(utils.translate("&cDisabling Fireworks Plugin"));
     }
 }

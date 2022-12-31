@@ -1,0 +1,114 @@
+# The loop configuration
+loops:
+  # Loop name
+  loop1:
+    points:
+    # The fireworks points expected to be used in this loop (Just the names of points)
+    - point1
+    - point2
+    - point3
+    # The interval time expected to be applied during the adjacent point. (Unit is "ticks", 20 ticks = 1 second)
+    interval: 5
+    # The loop status. Only "WORKING" and "STOPPED" can be accepted
+    status: WORKING
+
+# The Points configuration
+points:
+  # Point name
+  point1:
+    # The coordinates of the firework point
+    coordinates:
+      - 0
+      - 0
+      - 0
+    # The world that the point in.
+    world: world
+    # The colors
+    colors:
+      # Color name
+      color1:
+        # RGB value of this color
+        - 128
+        - 128
+        - 128
+      color2:
+        - 192
+        - 192
+        - 192
+    # The fade colors
+    fade_colors:
+      color1:
+        - 128
+        - 128
+        - 128
+      color2:
+        - 192
+        - 192
+        - 192
+    # Whether the firework will have trail?
+    trail: true
+    # Whether the firework will have flicker?
+    flicker: true
+    # The power value of this firework point
+    power: 4
+    # The shape value of this firework point.
+    # Acceptable values: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/FireworkEffect.Type.html
+    shape: BALL
+
+  point2:
+    coordinates:
+      - 10
+      - 10
+      - 10
+    world: world
+    colors:
+      color1:
+        - 128
+        - 128
+        - 128
+      color2:
+        - 192
+        - 192
+        - 192
+    fade_colors:
+      color1:
+        - 128
+        - 128
+        - 128
+      color2:
+        - 192
+        - 192
+        - 192
+    trail: true
+    flicker: true
+    power: 4
+    shape: BALL
+
+  point3:
+    coordinates:
+      - -10
+      - -10
+      - -10
+    world: world
+    colors:
+      color1:
+        - 128
+        - 128
+        - 128
+      color2:
+        - 192
+        - 192
+        - 192
+    fade_colors:
+      color1:
+        - 128
+        - 128
+        - 128
+      color2:
+        - 192
+        - 192
+        - 192
+    trail: true
+    flicker: true
+    power: 4
+    shape: BALL
