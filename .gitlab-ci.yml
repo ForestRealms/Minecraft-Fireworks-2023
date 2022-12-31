@@ -25,6 +25,8 @@ development_build:       # This job runs in the build stage, which runs first.
     - mvn clean package"
     - echo "开发版本编译完成"
   only: ["develop"]
+  tags:
+    - Maven
   artifacts:
     paths:
       - "./target/*.jar"
