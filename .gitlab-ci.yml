@@ -30,6 +30,25 @@ development_build:       # This job runs in the build stage, which runs first.
   artifacts:
     paths:
       - "./target/*.jar"
+    exclude:
+      - "./target/original-*.jar"
     when: on_success
     expire_in: 1 days
+
+  
+build:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - mvn clean package
+    - echo "开发版本编译完成"
+  only: [master]
+  tags:
+    - Maven
+  artifacts:
+    paths:
+      - "./target/*.jar"
+    exclude:
+      - "./target/original-*.jar"
+    when: on_success
+    expire_in: 7 days
 
