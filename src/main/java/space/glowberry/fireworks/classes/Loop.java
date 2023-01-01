@@ -41,7 +41,3 @@ public class Loop {
 
 }
 
-enum LoopState{
-    STOPPED,
-    WORKING
-}
