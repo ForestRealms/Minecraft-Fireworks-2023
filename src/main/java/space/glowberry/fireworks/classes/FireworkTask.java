@@ -1,8 +1,5 @@
 package space.glowberry.fireworks.classes;
 
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import java.util.Iterator;
 import java.util.List;
 
