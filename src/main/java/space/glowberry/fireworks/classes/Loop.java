@@ -1,11 +1,16 @@
 package space.glowberry.fireworks.classes;
 
+import org.bukkit.Bukkit;
+import space.glowberry.fireworks.Main;
+
 import java.util.List;
 
 public class Loop {
     private final List<Point> points;
-    private final int interval;
+    private final long interval;
     private LoopState loopState;
+
+    private int taskId;
 
     public Loop(List<Point> points, int interval) {
         this.points = points;
@@ -16,7 +21,7 @@ public class Loop {
         return points;
     }
 
-    public int getInterval() {
+    public long getInterval() {
         return interval;
     }
 
@@ -25,8 +30,15 @@ public class Loop {
     }
 
     public void setLoopState(LoopState loopState) {
+        if(loopState == LoopState.WORKING){
+            this.taskId = Bukkit.getScheduler().runTaskTimer(Main.plugin, new FireworkTask(this), 0L, this.interval).getTaskId();
+        }else{
+            Bukkit.getScheduler().cancelTask(this.taskId);
+        }
+
         this.loopState = loopState;
     }
+
 }
 
 enum LoopState{
