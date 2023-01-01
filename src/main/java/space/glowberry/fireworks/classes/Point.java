@@ -1,6 +1,12 @@
 package space.glowberry.fireworks.classes;
 
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
+
+import java.util.Objects;
 
 public class Point {
     /**
@@ -16,7 +22,7 @@ public class Point {
     /**
      * The specific property of the firework point
      */
-    private final FireworkProperty property;
+    private FireworkProperty property;
 
     /**
      * Create a firework point instance
@@ -30,6 +36,15 @@ public class Point {
         this.property = property;
     }
 
+    public Point(String name, Location location) {
+        this.name = name;
+        this.location = location;
+    }
+
+    public void setProperty(FireworkProperty property) {
+        this.property = property;
+    }
+
     public String getName() {
         return name;
     }
@@ -40,5 +55,14 @@ public class Point {
 
     public FireworkProperty getProperty() {
         return property;
+    }
+
+    /**
+     * Launch the point
+     */
+    public void launch(){
+        Entity entity = Objects.requireNonNull(this.location.getWorld()).spawnEntity(location, EntityType.FIREWORK);
+        Firework firework = (Firework) entity;
+        firework.setFireworkMeta(this.property.build(firework.getFireworkMeta()));
     }
 }
