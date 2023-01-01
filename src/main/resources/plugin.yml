@@ -1,4 +1,4 @@
-name: Minecraft Fireworks
+name: Minecraft-Fireworks
 version: '${project.version}'
 main: space.glowberry.fireworks.Main
 api-version: 1.18
