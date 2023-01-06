@@ -16,3 +16,13 @@ NoPointInLoop: "&c没有为循环%loopName%配置任何烟花燃放点！"
 InvalidPoint: "&c循环%loopName%中配置的烟花燃放点%pointName%无效！"
 InvalidInterval: "&c循环%loopName%的间隔时间值%interval%无效！"
 InvalidLoopStatus: "&c循环%loopName%的状态值无效！有效的值为：”WORKING“或者”STOPPED“，而当前的值为%status_value%"
+# 帮助内容
+helps:
+  create: "&b/fw create <燃放点名称> [randomly]  &a创建一个烟花燃放点（randomly为可选参数）"
+  launch: "&b/fw launch <烟花燃放点名称> [烟花燃放点名称...]  &a直接发射烟花燃放点（仅一次）"
+  createLoop: "&b/fw createLoop <循环名称> <燃放点> [燃放点] ...  &a创建新的循环"
+  startLoop: "&b/fw startLoop <循环名称> [循环名称] ...  &a启动一个或多个循环"
+  stopLoop: "&b/fw stopLoop <循环名称> [循环名称] ...  &a停止一个或多个循环"
+  loops: "&b/fw loops  &a查看所有循环的状态"
+  update: "&b/fw update  &a检查更新"
+  help: "&b/fw help  &a显示此帮助菜单"

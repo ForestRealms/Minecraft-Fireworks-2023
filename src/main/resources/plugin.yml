@@ -5,4 +5,9 @@ api-version: 1.18
 prefix: MCfW
 authors: [ Glowberry ]
 description: A minecraft plugin makes fireworks easier
-website: https://fireworks.glowberry.space
+website: http://fireworks.glowberry.space
+commands:
+  fw:
+    description: "MCFW FireWorks"
+    aliases:
+      - "fireworks"
