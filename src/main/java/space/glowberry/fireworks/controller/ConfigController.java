@@ -3,20 +3,36 @@ package space.glowberry.fireworks.controller;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Firework;
-import org.bukkit.inventory.meta.FireworkMeta;
+
+import space.glowberry.fireworks.Main;
 import space.glowberry.fireworks.classes.FireworkProperty;
 import space.glowberry.fireworks.classes.Point;
-import space.glowberry.fireworks.utils;
-
-import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public class ConfigController {
-    private static final YamlConfiguration config = utils.config;
+
+    private static final File config_file = Factory.getConfigFile();
+    private static final YamlConfiguration config = Factory.getConfig();
+    /**
+     * Load the configuration file
+     * @return YamlConfiguration file
+     */
+    private static YamlConfiguration getConfiguration(){
+        return YamlConfiguration.loadConfiguration(config_file);
+    }
+
+    /**
+     * Save the configuration file
+     * @throws IOException If I/O problems raised.
+     */
+    public static void saveConfiguration() throws IOException {
+        config.save(config_file);
+    }
 
     /**
      * Get the color (or fade color) list in terms of the name of a fireworks point
@@ -42,7 +58,8 @@ public class ConfigController {
 
     public static List<Point> getAllPoints(){
         List<Point> result = new ArrayList<>();
-        Set<String> PointNames = Objects.requireNonNull(config.getConfigurationSection("points")).getKeys(false);
+        ConfigurationSection points = config.getConfigurationSection("points");
+        Set<String> PointNames = Objects.requireNonNull(points).getKeys(false);
         for (String pointName : PointNames) {
             List<Double> coordinates = config.getDoubleList("points." + pointName + ".coordinates");
             String worldName = config.getString("points." + pointName + ".world");
