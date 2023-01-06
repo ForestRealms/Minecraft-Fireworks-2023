@@ -6,15 +6,17 @@ import java.util.List;
 public class FireworkTask implements Runnable {
 
     private final Loop loop;
+    private Iterator<Point> iterator;
 
     public FireworkTask(Loop loop) {
         this.loop = loop;
+        List<Point> points = this.loop.getPoints();
+        iterator = points.iterator();
     }
 
     @Override
     public void run() {
         List<Point> points = this.loop.getPoints();
-        Iterator<Point> iterator = points.iterator();
         Point point;
         if (!iterator.hasNext()) {
             iterator = points.iterator();
