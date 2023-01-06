@@ -8,6 +8,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import space.glowberry.fireworks.Exceptions.InvalidConfigurationFile;
 import space.glowberry.fireworks.classes.FireworkProperty;
+import space.glowberry.fireworks.classes.Loop;
+import space.glowberry.fireworks.classes.LoopState;
 import space.glowberry.fireworks.classes.Point;
 import space.glowberry.fireworks.utils;
 
@@ -32,16 +34,16 @@ public class ConfigManager {
         if(check.size() == 0){
             this.config = config;
         }else{
-            String completeCheckingConfigurationFileMessage =
-                    Factory.getLanguage().getString("CompleteCheckingConfigurationFile");
-            assert completeCheckingConfigurationFileMessage != null;
-            completeCheckingConfigurationFileMessage =
-                    completeCheckingConfigurationFileMessage.replaceAll("%errors%", String.valueOf(check.size()));
-            utils.OutputConsoleMessage(completeCheckingConfigurationFileMessage);
-            for (InvalidConfigurationFile reason : check) {
-                utils.OutputConsoleMessage(reason.getMessage());
-            }
             this.config = null;
+        }
+        String completeCheckingConfigurationFileMessage =
+                Factory.getLanguage().getString("CompleteCheckingConfigurationFile");
+        assert completeCheckingConfigurationFileMessage != null;
+        completeCheckingConfigurationFileMessage =
+                completeCheckingConfigurationFileMessage.replaceAll("%errors%", String.valueOf(check.size()));
+        utils.OutputConsoleMessage(completeCheckingConfigurationFileMessage);
+        for (InvalidConfigurationFile reason : check) {
+            utils.OutputConsoleMessage(reason.getMessage());
         }
 
     }
@@ -105,6 +107,32 @@ public class ConfigManager {
         }
         // Return the result
         return result;
+    }
+
+    private Point getPointByName(String name){
+        for (Point point : getAllPoints()) {
+            if(point.getName().equals(name)){
+                return point;
+            }
+        }
+        return null;
+    }
+
+    public List<Loop> getAllLoops(){
+        List<Loop> loops = new ArrayList<>();
+        ConfigurationSection loopSection = this.config.getConfigurationSection("loops");
+        assert loopSection != null;
+        for (String loopName : loopSection.getKeys(false)) {
+            Loop loop = new Loop();
+            List<String> pointNames = loopSection.getStringList(loopName + ".points");
+            for (String pointName : pointNames) {
+                loop.addPoint(getPointByName(pointName));
+            }
+            loop.setInterval(loopSection.getLong(loopName + ".interval"));
+            loop.setLoopState(LoopState.valueOf(loopSection.getString(loopName + ".status")));
+            loops.add(loop);
+        }
+        return loops;
     }
 
     /**
