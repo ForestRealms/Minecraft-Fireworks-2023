@@ -13,4 +13,12 @@ public class Factory {
     public static YamlConfiguration getConfig(){
         return YamlConfiguration.loadConfiguration(getConfigFile());
     }
+
+    public static File getLanguageFile(){
+        return new File(Main.DataFolder, getConfig().getString("language") + ".yml");
+    }
+
+    public static YamlConfiguration getLanguage(){
+        return YamlConfiguration.loadConfiguration(getLanguageFile());
+    }
 }

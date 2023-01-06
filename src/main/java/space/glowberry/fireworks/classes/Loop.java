@@ -3,11 +3,16 @@ package space.glowberry.fireworks.classes;
 import org.bukkit.Bukkit;
 import space.glowberry.fireworks.Main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Loop {
     private final List<Point> points;
-    private final long interval;
+
+    /**
+     * The interval between each point. Unit: ticks
+     */
+    private long interval;
     private LoopState loopState;
 
     private int taskId;
@@ -15,6 +20,10 @@ public class Loop {
     public Loop(List<Point> points, int interval) {
         this.points = points;
         this.interval = interval;
+    }
+
+    public Loop() {
+        this.points = new ArrayList<>();
     }
 
     public List<Point> getPoints() {
@@ -39,5 +48,22 @@ public class Loop {
         this.loopState = loopState;
     }
 
+    public void setInterval(long interval) {
+        this.interval = interval;
+    }
+
+    public void addPoint(Point point){
+        this.points.add(point);
+    }
+
+    @Override
+    public String toString() {
+        return "Loop{" +
+                "points=" + points +
+                ", interval=" + interval +
+                ", loopState=" + loopState +
+                ", taskId=" + taskId +
+                '}';
+    }
 }
 
