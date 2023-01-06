@@ -1,7 +1,6 @@
 package space.glowberry.fireworks.classes;
 
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -64,5 +63,15 @@ public class Point {
         Entity entity = Objects.requireNonNull(this.location.getWorld()).spawnEntity(location, EntityType.FIREWORK);
         Firework firework = (Firework) entity;
         firework.setFireworkMeta(this.property.build(firework.getFireworkMeta()));
+    }
+
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                ", property=" + property +
+                '}';
     }
 }

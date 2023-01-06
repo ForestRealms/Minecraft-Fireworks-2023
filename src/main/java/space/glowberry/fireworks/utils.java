@@ -14,7 +14,7 @@ public class utils {
     public static String getVersion(){
         return version;
     }
-    public static YamlConfiguration config = getConfiguration();
+
 
     /**
      * Translate the message string with alternative char "&"
@@ -34,30 +34,9 @@ public class utils {
      * @param msg The message expected to show in the console interface
      */
     public static void OutputConsoleMessage(String msg){
-        Bukkit.getConsoleSender().sendMessage(msg);
+        Bukkit.getConsoleSender().sendMessage(translate(msg));
     }
 
-    /**
-     * Get the default configuration file Instance
-     * @return The configuration file
-     */
-    public static File getConfigurationFile(){
-        return new File(Main.DataFolder, "config.yml");
-    }
 
-    /**
-     * Load the configuration file
-     * @return YamlConfiguration file
-     */
-    private static YamlConfiguration getConfiguration(){
-        return YamlConfiguration.loadConfiguration(getConfigurationFile());
-    }
 
-    /**
-     * Save the configuration file
-     * @throws IOException If I/O problems raised.
-     */
-    public static void saveConfiguration() throws IOException {
-        config.save(getConfigurationFile());
-    }
 }
