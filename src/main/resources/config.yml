@@ -54,7 +54,7 @@ points:
     # The power value of this firework point
     power: 4
     # The shape value of this firework point.
-    # Acceptable values: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/FireworkEffect.Type.html
+    # Valid values: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/FireworkEffect.Type.html
     shape: BALL
 
   point2:

@@ -1,12 +1,17 @@
 package space.glowberry.fireworks.controller;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import space.glowberry.fireworks.Main;
+import space.glowberry.fireworks.Exceptions.InvalidConfigurationFile;
 import space.glowberry.fireworks.classes.FireworkProperty;
 import space.glowberry.fireworks.classes.Point;
+import space.glowberry.fireworks.utils;
+
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,25 +19,33 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class ConfigController {
+public class ConfigManager {
+    private final File ConfigFile;
 
-    private static final File config_file = Factory.getConfigFile();
-    private static final YamlConfiguration config = Factory.getConfig();
-    /**
-     * Load the configuration file
-     * @return YamlConfiguration file
-     */
-    private static YamlConfiguration getConfiguration(){
-        return YamlConfiguration.loadConfiguration(config_file);
+
+    private final YamlConfiguration config;
+
+    public ConfigManager(File configFile, YamlConfiguration config) {
+        ConfigFile = configFile;
+        ConfigChecker checker = new ConfigChecker(config);
+        List<InvalidConfigurationFile> check = checker.check();
+        if(check.size() == 0){
+            this.config = config;
+        }else{
+            String completeCheckingConfigurationFileMessage =
+                    Factory.getLanguage().getString("CompleteCheckingConfigurationFile");
+            assert completeCheckingConfigurationFileMessage != null;
+            completeCheckingConfigurationFileMessage =
+                    completeCheckingConfigurationFileMessage.replaceAll("%errors%", String.valueOf(check.size()));
+            utils.OutputConsoleMessage(completeCheckingConfigurationFileMessage);
+            for (InvalidConfigurationFile reason : check) {
+                utils.OutputConsoleMessage(reason.getMessage());
+            }
+            this.config = null;
+        }
+
     }
 
-    /**
-     * Save the configuration file
-     * @throws IOException If I/O problems raised.
-     */
-    public static void saveConfiguration() throws IOException {
-        config.save(config_file);
-    }
 
     /**
      * Get the color (or fade color) list in terms of the name of a fireworks point
@@ -40,7 +53,7 @@ public class ConfigController {
      * @param fade If the fade color is expected to be obtained
      * @return The color list
      */
-    private static List<Color> getColorsOf(String PointName, boolean fade){
+    private List<Color> getColorsOf(String PointName, boolean fade){
         List<Color> result = new ArrayList<>();
         ConfigurationSection ColorSection;
         if(!fade){
@@ -56,7 +69,7 @@ public class ConfigController {
         return result;
     }
 
-    public static List<Point> getAllPoints(){
+    public List<Point> getAllPoints(){
         List<Point> result = new ArrayList<>();
         ConfigurationSection points = config.getConfigurationSection("points");
         Set<String> PointNames = Objects.requireNonNull(points).getKeys(false);
@@ -92,5 +105,13 @@ public class ConfigController {
         }
         // Return the result
         return result;
+    }
+
+    /**
+     * Save the configuration file
+     * @throws IOException If I/O problems raised.
+     */
+    public void saveConfiguration() throws IOException {
+        config.save(ConfigFile);
     }
 }
