@@ -6,7 +6,7 @@
 
     <groupId>space.glowberry.fireworks</groupId>
     <artifactId>Minecraft-Fireworks</artifactId>
-    <version>2.0-Beta(1.18.2)</version>
+    <version>2.0-Beta(1.16.5)</version>
     <packaging>jar</packaging>
 
     <name>Minecraft Fireworks</name>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
