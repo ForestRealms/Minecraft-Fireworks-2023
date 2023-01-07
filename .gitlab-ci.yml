@@ -21,6 +21,7 @@ stages:          # List of stages for jobs, and their order of execution
 
 development_build:       # This job runs in the build stage, which runs first.
   stage: build
+  image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
   script:
     - mvn clean package
     - echo "开发版本编译完成"
@@ -38,6 +39,7 @@ development_build:       # This job runs in the build stage, which runs first.
   
 build:       # This job runs in the build stage, which runs first.
   stage: build
+  image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
   script:
     - mvn clean package
     - echo "开发版本编译完成"
