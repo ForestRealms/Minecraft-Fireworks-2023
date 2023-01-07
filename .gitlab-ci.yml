@@ -38,6 +38,7 @@ development_build:       # This job runs in the build stage, which runs first.
   
 build:       # This job runs in the build stage, which runs first.
   stage: build
+  image: registry.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
   script:
     - mvn clean package
     - echo "开发版本编译完成"
