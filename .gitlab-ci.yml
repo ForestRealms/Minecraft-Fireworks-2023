@@ -16,27 +16,110 @@
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
+variables:
+  NAME: "Minecraft Fireworks"
+  VERSION: "2.0-Beta"
+
+default:
+  image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
+
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-development_build:       # This job runs in the build stage, which runs first.
+development_build_1.14.3:
   stage: build
-  image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
   script:
-    - mvn clean package
-    - echo "开发版本编译完成"
+    - mvn clean package --file ./pom-1.14.3.xml
+    - echo "1.14.3 编译完成"
   only: [develop]
   tags:
     - Maven
   artifacts:
+    name: "$NAME $VERSION (1.14.3)"
     paths:
       - "./target/*.jar"
-    exclude:
-      - "./target/original-*.jar"
     when: on_success
-    expire_in: 1 days
+    expire_in: 1 hours
 
+development_build_1.15.2:
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.15.2.xml
+    - echo "1.14.3 编译完成"
+  only: [develop]
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.15.2)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 1 hours
+
+development_build_1.16.5:
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.16.5.xml
+    - echo "1.16.5 编译完成"
+  only: [develop]
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.16.5)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 1 hours
+
+development_build_1.17.1:
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.17.1.xml
+    - echo "1.17.1 编译完成"
+  only: [develop]
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.17.1)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 1 hours
+
+development_build_1.18.2:
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.18.2.xml
+    - echo "1.18.2 编译完成"
+  only: [develop]
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.18.2)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 1 hours
+
+development_build_1.19.3:
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.19.3.xml
+    - echo "1.19.3 编译完成"
+  only: [develop]
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.19.3)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 1 hours
   
+
+
+
+
 build:       # This job runs in the build stage, which runs first.
   stage: build
   image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
