@@ -3,8 +3,9 @@ package space.glowberry.fireworks.classes;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Define the property for a specific firework instance
@@ -13,8 +14,8 @@ public class FireworkProperty {
     private boolean flicker;
     private boolean trail;
     private FireworkEffect.Type type;
-    private List<Color> colors;
-    private List<Color> fadeColors;
+    private Map<String, Color> colors;
+    private Map<String, Color> fadeColors;
     private int power;
 
     public FireworkProperty() {
@@ -44,21 +45,36 @@ public class FireworkProperty {
         this.type = type;
     }
 
-    public List<Color> getColors() {
+
+    public Map<String, Color> getColors() {
         return colors;
     }
 
-    public void setColors(List<Color> colors) {
+    public void setColors(Map<String, Color> colors) {
         this.colors = colors;
     }
 
-    public List<Color> getFadeColors() {
+    public Map<String, Color> getFadeColors() {
         return fadeColors;
     }
 
-    public void setFadeColors(List<Color> fadeColors) {
+    public void setFadeColors(Map<String, Color> fadeColors) {
         this.fadeColors = fadeColors;
     }
+
+    public void setColor(Color color){
+        Map<String, Color> c = new HashMap<>();
+        c.put("color", color);
+        this.colors = c;
+    }
+
+    public void setFadeColor(Color fadeColor){
+        Map<String, Color> c = new HashMap<>();
+        c.put("color", fadeColor);
+        this.colors = c;
+        this.fadeColors = c;
+    }
+
 
     public int getPower() {
         return power;
@@ -79,10 +95,79 @@ public class FireworkProperty {
         builder.flicker(this.flicker);
         builder.trail(this.trail);
         builder.with(this.type);
-        builder.withColor(this.colors);
-        builder.withFade(this.fadeColors);
+        for (String colorName : this.colors.keySet()) {
+            builder.withColor(this.colors.get(colorName));
+        }
+        for (String colorName : this.fadeColors.keySet()) {
+            builder.withFade(this.colors.get(colorName));
+        }
         FireworkEffect effect = builder.build();
         meta.addEffect(effect);
         return meta;
+    }
+
+
+    /**
+     * Randomly generate the fireworks property
+     * @param colorNum The number of colors
+     * @param fadeColorNum The number of fade colors
+     */
+    public void randomize(int colorNum, int fadeColorNum){
+        Map<String, Color> colorMap = new HashMap<>();
+        for (int i = 1; i < colorNum + 1; i++) {
+            String name = "color_" + i;
+            Color color = Color.fromRGB(
+                    (int) (Math.random() * 255),
+                    (int) (Math.random() * 255),
+                    (int) (Math.random() * 255)
+            );
+            colorMap.put(name, color);
+        }
+        this.colors = colorMap;
+        colorMap.clear();
+        for (int i = 1; i < fadeColorNum + 1; i++) {
+            String name = "fade_color_" + i;
+            Color color = Color.fromRGB(
+                    (int) (Math.random() * 255),
+                    (int) (Math.random() * 255),
+                    (int) (Math.random() * 255)
+            );
+            colorMap.put(name, color);
+        }
+        this.fadeColors = colorMap;
+        this.setPower((int) (1 + Math.random() * 5));
+        this.setTrail(new Random().nextBoolean());
+        this.setFlicker(new Random().nextBoolean());
+        int x = new Random().nextInt(5);
+        switch (x){
+            case 0:
+                this.setType(FireworkEffect.Type.BALL);
+            case 1:
+                this.setType(FireworkEffect.Type.BALL_LARGE);
+            case 2:
+            default:
+                this.setType(FireworkEffect.Type.BURST);
+            case 3:
+                this.setType(FireworkEffect.Type.STAR);
+            case 4:
+                this.setType(FireworkEffect.Type.CREEPER);
+        }
+
+    }
+
+    public void randomize(boolean RandomColorNumber, boolean RandomFadeColorNumber){
+        int colorNum;
+        int fadeColorNum;
+        if (RandomColorNumber){
+            colorNum = (int) (Math.random() * 20);
+        }else{
+            colorNum = 10;
+        }
+        if (RandomFadeColorNumber){
+            fadeColorNum = (int) (Math.random() * 20);
+        }else {
+            fadeColorNum = 10;
+        }
+        randomize(colorNum, fadeColorNum);
     }
 }

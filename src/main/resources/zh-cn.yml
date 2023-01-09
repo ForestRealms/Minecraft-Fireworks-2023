@@ -26,3 +26,9 @@ helps:
   loops: "&b/fw loops  &a查看所有循环的状态"
   update: "&b/fw update  &a检查更新"
   help: "&b/fw help  &a显示此帮助菜单"
+
+IO-Exception: "&c遇到I/O错误，请检查服务器！"
+success-on-create: "&a创建烟花燃放点%pointName%成功！"
+PlayerOnly: "&c仅游戏内玩家可执行此命令"
+NoPermission: "&c您没有执行此命令的权限"
+PointNotExist: "&c烟花燃放点%pointName%不存在！"

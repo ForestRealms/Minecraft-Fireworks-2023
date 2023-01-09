@@ -16,4 +16,14 @@ public class reload implements CommandHandler {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;
     }
+
+    @Override
+    public boolean canHandle(String[] args) {
+        return false;
+    }
+
+    @Override
+    public void sendHelp() {
+
+    }
 }

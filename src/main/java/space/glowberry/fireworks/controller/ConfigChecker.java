@@ -5,6 +5,7 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import space.glowberry.fireworks.Exceptions.*;
+import space.glowberry.fireworks.Factory;
 import space.glowberry.fireworks.classes.LoopState;
 
 import java.util.ArrayList;

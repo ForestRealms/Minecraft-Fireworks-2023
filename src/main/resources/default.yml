@@ -1,0 +1,16 @@
+# The default configuration for new point
+point:
+  colors:
+    color:
+      - 128
+      - 128
+      - 128
+  fade_colors:
+    fade_color:
+      - 64
+      - 128
+      - 192
+  trail: true
+  flicker: true
+  power: 4
+  shape: BALL

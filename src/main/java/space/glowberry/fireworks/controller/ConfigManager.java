@@ -7,27 +7,23 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import space.glowberry.fireworks.Exceptions.InvalidConfigurationFile;
-import space.glowberry.fireworks.classes.FireworkProperty;
-import space.glowberry.fireworks.classes.Loop;
-import space.glowberry.fireworks.classes.LoopState;
-import space.glowberry.fireworks.classes.Point;
+import space.glowberry.fireworks.Factory;
+import space.glowberry.fireworks.Main;
+import space.glowberry.fireworks.classes.*;
 import space.glowberry.fireworks.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class ConfigManager {
-    private final File ConfigFile;
+
 
 
     private final YamlConfiguration config;
 
-    public ConfigManager(File configFile, YamlConfiguration config) {
-        ConfigFile = configFile;
+
+    public ConfigManager(YamlConfiguration config) {
         ConfigChecker checker = new ConfigChecker(config);
         List<InvalidConfigurationFile> check = checker.check();
         if(check.size() == 0){
@@ -54,8 +50,8 @@ public class ConfigManager {
      * @param fade If the fade color is expected to be obtained
      * @return The color list
      */
-    private List<Color> getColorsOf(String PointName, boolean fade){
-        List<Color> result = new ArrayList<>();
+    private Map<String, Color> getColorsOf(String PointName, boolean fade){
+        Map<String, Color> result = new HashMap<>();
         ConfigurationSection ColorSection;
         if(!fade){
             ColorSection = config.getConfigurationSection("points." + PointName + ".colors");
@@ -65,7 +61,7 @@ public class ConfigManager {
         assert ColorSection != null;
         for (String colorName : ColorSection.getKeys(false)) {
             List<Integer> RGB = ColorSection.getIntegerList(colorName);
-            result.add(Color.fromRGB(RGB.get(0), RGB.get(1), RGB.get(2)));
+            result.put(colorName, Color.fromRGB(RGB.get(0), RGB.get(1), RGB.get(2)));
         }
         return result;
     }
@@ -81,8 +77,8 @@ public class ConfigManager {
             // Get the location of the fireworks point
             Location location = new Location(Bukkit.getWorld(worldName), coordinates.get(0), coordinates.get(1), coordinates.get(2));
             // Get the colors and fade_colors of the fireworks point
-            List<Color> colors = getColorsOf(pointName, false);
-            List<Color> fadeColors = getColorsOf(pointName, true);
+            Map<String, Color> colors = getColorsOf(pointName, false);
+            Map<String, Color> fadeColors = getColorsOf(pointName, true);
             // Get other properties of the fireworks point
             boolean hasTrail = config.getBoolean("points." + pointName + ".trail");
             boolean hasFlicker = config.getBoolean("points." + pointName + ".flicker");
@@ -117,6 +113,52 @@ public class ConfigManager {
         return null;
     }
 
+    public void saveAllPoints() throws IOException {
+        PointPool pool = PointPool.getInstance();
+        for (Point point : pool.getAll()) {
+            String name = point.getName();
+            List<Double> coordinates = getCoordinates(point.getLocation());
+            String world = Objects.requireNonNull(point.getLocation().getWorld()).getName();
+            Map<String, Color> colors = point.getProperty().getColors();
+            Map<String, Color> fadeColors = point.getProperty().getFadeColors();
+            boolean trail = point.getProperty().hasTrail();
+            boolean flicker = point.getProperty().hasFlicker();
+            int power = point.getProperty().getPower();
+            String shape = point.getProperty().getType().toString();
+            this.config.set("points." + name + ".coordinates", coordinates);
+            this.config.set("points." + name + ".world", world);
+            this.config.set("points." + name + ".trail", trail);
+            this.config.set("points." + name + ".flicker", flicker);
+            this.config.set("points." + name + ".power", power);
+            this.config.set("points." + name + ".shape", shape);
+            for (String colorName : colors.keySet()) {
+                List<Integer> c = new ArrayList<>(3);
+                c.add(colors.get(colorName).getRed());
+                c.add(colors.get(colorName).getGreen());
+                c.add(colors.get(colorName).getBlue());
+                this.config.set("points." + name + ".colors." + colorName, c);
+            }
+            for (String colorName : fadeColors.keySet()) {
+                List<Integer> c = new ArrayList<>(3);
+                c.add(colors.get(colorName).getRed());
+                c.add(colors.get(colorName).getGreen());
+                c.add(colors.get(colorName).getBlue());
+                this.config.set("points." + name + ".fade_colors." + colorName, c);
+            }
+
+        }
+        config.save(Factory.getConfigFile());
+
+    }
+
+    private List<Double> getCoordinates(Location location){
+        List<Double> coordinates = new ArrayList<>();
+        coordinates.add(location.getX());
+        coordinates.add(location.getY());
+        coordinates.add(location.getZ());
+        return coordinates;
+    }
+
     public List<Loop> getAllLoops(){
         List<Loop> loops = new ArrayList<>();
         ConfigurationSection loopSection = this.config.getConfigurationSection("loops");
@@ -134,11 +176,5 @@ public class ConfigManager {
         return loops;
     }
 
-    /**
-     * Save the configuration file
-     * @throws IOException If I/O problems raised.
-     */
-    public void saveConfiguration() throws IOException {
-        config.save(ConfigFile);
-    }
+
 }

@@ -22,6 +22,11 @@ public class LoopPool extends Pool<Loop>{
         return this.loops;
     }
 
+    @Override
+    public void addAll(List<Loop> loops) {
+        this.loops.addAll(loops);
+    }
+
     public static LoopPool getInstance() {
         return instance;
     }

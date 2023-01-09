@@ -6,4 +6,6 @@ public abstract class Pool<T> {
     public abstract void add(T t);
     public abstract void remove(T t);
     public abstract List<T> getAll();
+    public abstract void addAll(List<T> ts);
+
 }

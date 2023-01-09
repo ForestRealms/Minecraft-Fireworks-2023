@@ -1,5 +1,7 @@
 # The language that expected to be used
 language: zh-cn
+# The permission node
+permission: "fw.admin"
 # The loop configuration
 loops:
   # Loop name
