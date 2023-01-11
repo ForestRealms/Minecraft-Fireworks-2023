@@ -25,7 +25,10 @@ Clone the repository, then execute `mvn clean package` in the local root directo
 As developers in China, we are well aware that access to GitHub can be unstable in mainland China. If you are Chinese users, you can enter http://gitlab.glowberry.space/glowberry-community/minecraft-fireworks-2023/-/tree/master for the page.
 
 ### Usage Instructions
- - `/fw create <PointName> [randomly]` : Create a fireworks point at your location, only Player in game can execute. ("`randomly`" is a optional argument). If you use `randomly`, the point will generate with a random property. If not, the point will generarte with configuration in `default.yml` in your Datafoler.
+- `/fw create <PointName> [randomly]` : Create a fireworks point at your location, only Player in game can execute. ("`randomly`" is a optional argument). If you use `randomly`, the point will generate with a random property. If not, the point will generarte with configuration in `default.yml` in your Datafoler.
 - `/fw launch <PointName1> [PointName2] ...` : Launch the specific fireworks point using point name. At least 1 of point name should be used.
 - `/fw createLoop <loopName> <interval=?> <pointName1> [PointName2] ...` : Create a loop, where interval=? indicates the interval time of each point in this loop. Please replace "?" with a Integer value, whose unit is `ticks`.
 - `/fw startLoop <loopName1> [loopName2] ...` : Start loop(s) by loop name.
+- `/fw loops` : Inspect the status and information of all loops.
+- `/fw update` : Check update. ***(Note: Current version is not able to check automatically, please check update manually in this page)***
+- `/fw reload` : Reload this plugin.
