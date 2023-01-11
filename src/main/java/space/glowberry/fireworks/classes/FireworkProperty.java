@@ -3,7 +3,6 @@ package space.glowberry.fireworks.classes;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
