@@ -8,7 +8,7 @@ import java.util.List;
 
 public class LoopPool extends Pool<Loop>{
 
-    private List<Loop> loops = new ArrayList<>();
+    private final List<Loop> loops = new ArrayList<>();
     private static final LoopPool instance = new LoopPool();
 
     private LoopPool() {

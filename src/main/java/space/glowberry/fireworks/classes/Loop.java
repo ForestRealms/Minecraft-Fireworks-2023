@@ -60,6 +60,9 @@ public class Loop {
     }
 
     public void setLoopState(LoopState loopState) {
+        if(loopState == getLoopState()){
+            return;
+        }
         if(loopState == LoopState.WORKING){
             this.taskId = Bukkit.getScheduler().runTaskTimer(Main.plugin, new FireworkTask(this), 0L, this.interval).getTaskId();
         }else{
@@ -75,6 +78,21 @@ public class Loop {
 
     public void addPoint(Point point){
         this.points.add(point);
+    }
+    public void removePoint(Point point){
+        this.points.remove(point);
+    }
+
+    /**
+     * Remove a point in the loop by name
+     * @param name The point name
+     */
+    public void removePoint(String name){
+        for (Point point : this.points) {
+            if (point.getName().equals(name)){
+                removePoint(point);
+            }
+        }
     }
 
     @Override

@@ -45,11 +45,19 @@ public class stopLoop implements CommandHandler {
         for (String loopName : loopNames) {
             Loop loop = LoopPool.getInstance().getLoop(loopName);
             assert loop != null;
-            loop.setLoopState(LoopState.STOPPED);
-            String message = Factory.getLanguage().getString("success-on-stopLoop");
-            assert message != null;
-            message = message.replaceAll("%loopName%", loopName);
-            sender.sendMessage(translate(message));
+            if(loop.getLoopState() == LoopState.STOPPED){
+                String message = Factory.getLanguage().getString("LoopAlreadyStopped");
+                assert message != null;
+                message = message.replaceAll("%loopName%", loopName);
+                sender.sendMessage(translate(message));
+            }else{
+                loop.setLoopState(LoopState.STOPPED);
+                String message = Factory.getLanguage().getString("success-on-stopLoop");
+                assert message != null;
+                message = message.replaceAll("%loopName%", loopName);
+                sender.sendMessage(translate(message));
+            }
+
         }
 
         try {

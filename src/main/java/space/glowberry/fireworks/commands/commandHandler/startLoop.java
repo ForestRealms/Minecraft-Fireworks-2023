@@ -45,11 +45,19 @@ public class startLoop implements CommandHandler {
         for (String loopName : loopNames) {
             Loop loop = LoopPool.getInstance().getLoop(loopName);
             assert loop != null;
-            loop.setLoopState(LoopState.WORKING);
-            String message = Factory.getLanguage().getString("success-on-startLoop");
-            assert message != null;
-            message = message.replaceAll("%loopName%", loopName);
-            sender.sendMessage(translate(message));
+            if(loop.getLoopState() == LoopState.WORKING){
+                String message = Factory.getLanguage().getString("LoopAlreadyWorking");
+                assert message != null;
+                message = message.replaceAll("%loopName%", loopName);
+                sender.sendMessage(translate(message));
+            }else{
+                loop.setLoopState(LoopState.WORKING);
+                String message = Factory.getLanguage().getString("success-on-startLoop");
+                assert message != null;
+                message = message.replaceAll("%loopName%", loopName);
+                sender.sendMessage(translate(message));
+            }
+
         }
 
         try {
