@@ -13,9 +13,8 @@ import space.glowberry.fireworks.classes.Point;
 import space.glowberry.fireworks.classes.PointPool;
 import space.glowberry.fireworks.commands.CommandHandler;
 import space.glowberry.fireworks.Factory;
-import space.glowberry.fireworks.controller.ConfigManager;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +24,7 @@ public class create implements CommandHandler {
 
     private CommandSender sender;
     @Override
-    public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // fw create <pointName>
         System.out.println(Arrays.toString(args));
         this.sender = sender;
@@ -83,7 +82,7 @@ public class create implements CommandHandler {
     }
 
     @Override
-    public List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;
     }
 

@@ -39,4 +39,5 @@ PointAlreadyExist: "&c烟花燃放点%pointName%已存在，请勿重复创建�
 LoopNotExist: "&c循环%loopName%不存在！"
 LoopAlreadyExist: "&c循环%loopName%已存在，请勿重复创建！"
 ZeroInterval: "&c燃放间隔时间非法"
+ReloadComplete: "&a重载完毕！"
 

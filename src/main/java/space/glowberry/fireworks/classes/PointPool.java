@@ -5,7 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PointPool extends Pool<Point>{
 
-    private final List<Point> points = new ArrayList<>();
+    private List<Point> points = new ArrayList<>();
     private static final PointPool instance = new PointPool();
 
     private PointPool() { }
@@ -85,5 +85,9 @@ public class PointPool extends Pool<Point>{
             result.add(point.getName());
         }
         return result;
+    }
+
+    public void ReInitialize() {
+        this.points = new ArrayList<>();
     }
 }

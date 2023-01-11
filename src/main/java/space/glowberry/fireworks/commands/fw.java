@@ -10,6 +10,7 @@ import space.glowberry.fireworks.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class fw implements TabExecutor {
 
@@ -29,6 +30,10 @@ public class fw implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         this.sender = sender;
+        if(!sender.hasPermission(Objects.requireNonNull(Factory.getConfig().getString("permission")))){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(Factory.getLanguage().getString("NoPermission"))));
+            return true;
+        }
         // fw ......
         if(args.length == 0){
             showHelps();
@@ -46,6 +51,9 @@ public class fw implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         this.sender = sender;
+        if(!sender.hasPermission(Objects.requireNonNull(Factory.getConfig().getString("permission")))){
+            return null;
+        }
         // fw ......
         if(args.length == 1){
             List<String> result = new ArrayList<>(Factory.getCommandHandlers().size());

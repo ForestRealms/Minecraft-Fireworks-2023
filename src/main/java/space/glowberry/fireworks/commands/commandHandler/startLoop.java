@@ -8,6 +8,7 @@ import space.glowberry.fireworks.classes.LoopPool;
 import space.glowberry.fireworks.classes.LoopState;
 import space.glowberry.fireworks.commands.CommandHandler;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,6 +51,11 @@ public class startLoop implements CommandHandler {
             sender.sendMessage(translate(message));
         }
 
+        try {
+            LoopPool.getInstance().saveAllLoops();
+        } catch (IOException e) {
+            sender.sendMessage(translate(Factory.getLanguage().getString("IO-Exception")));
+        }
 
 
         return true;

@@ -2,17 +2,23 @@ package space.glowberry.fireworks.classes;
 
 import space.glowberry.fireworks.Factory;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoopPool extends Pool<Loop>{
 
-    private final List<Loop> loops = new ArrayList<>();
+    private List<Loop> loops = new ArrayList<>();
     private static final LoopPool instance = new LoopPool();
 
     private LoopPool() {
+    }
+
+    public void ReInitialize(){
+        for (Loop loop : this.loops) {
+            loop.setLoopState(LoopState.STOPPED);
+        }
+        this.loops.clear();
     }
 
 
@@ -21,7 +27,6 @@ public class LoopPool extends Pool<Loop>{
      * @param loopName The name of a loop
      * @return Null if the loop not exist.
      */
-    @Nullable
     public Loop getLoop(String loopName){
         for (Loop loop : this.loops) {
             if (loop.getName().equals(loopName)){
