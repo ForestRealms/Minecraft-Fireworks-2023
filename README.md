@@ -27,4 +27,5 @@ As developers in China, we are well aware that access to GitHub can be unstable 
 ### Usage Instructions
  - `/fw create <PointName> [randomly]` : Create a fireworks point at your location, only Player in game can execute. ("`randomly`" is a optional argument). If you use `randomly`, the point will generate with a random property. If not, the point will generarte with configuration in `default.yml` in your Datafoler.
 - `/fw launch <PointName1> [PointName2] ...` : Launch the specific fireworks point using point name. At least 1 of point name should be used.
-
+- `/fw createLoop <loopName> <interval=?> <pointName1> [PointName2] ...` : Create a loop, where interval=? indicates the interval time of each point in this loop. Please replace "?" with a Integer value, whose unit is `ticks`.
+- `/fw startLoop <loopName1> [loopName2] ...` : Start loop(s) by loop name.
