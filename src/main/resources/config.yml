@@ -13,8 +13,8 @@ loops:
     - point3
     # The interval time expected to be applied during the adjacent point. (Unit is "ticks", 20 ticks = 1 second)
     interval: 5
-    # The loop status. Only "WORKING" and "STOPPED" can be accepted
-    status: WORKING
+    # The loop status. Only "WORKING" and "STOPPED" could be accepted
+    status: STOPPED
 
 # The Points configuration
 points:

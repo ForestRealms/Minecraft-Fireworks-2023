@@ -1,6 +1,7 @@
 package space.glowberry.fireworks.classes;
 
 import org.bukkit.Bukkit;
+import space.glowberry.fireworks.Exceptions.ZeroIntervalError;
 import space.glowberry.fireworks.Main;
 
 import java.util.ArrayList;
@@ -14,16 +15,36 @@ public class Loop {
      */
     private long interval;
     private LoopState loopState;
+    private String name;
 
     private int taskId;
 
-    public Loop(List<Point> points, int interval) {
+    public Loop(String name, List<Point> points, int interval) throws NullPointerException, IllegalArgumentException, ZeroIntervalError {
+        if(name == null){
+            throw new NullPointerException("Name of the loop is NULL");
+        }
+        if(points == null){
+            throw new NullPointerException("Points of the loop \"" + name + " \"is NULL");
+        }
+        if(interval <= 0){
+            throw new ZeroIntervalError("The interval of loop \"" + name + "\" cannot be 0");
+        }
+        this.name = name;
         this.points = points;
         this.interval = interval;
+        this.loopState = LoopState.STOPPED;
     }
 
     public Loop() {
         this.points = new ArrayList<>();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Point> getPoints() {

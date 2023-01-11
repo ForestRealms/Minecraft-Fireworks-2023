@@ -7,9 +7,12 @@ import space.glowberry.fireworks.commands.CommandHandler;
 import java.util.List;
 
 public class stopLoop implements CommandHandler {
+    private CommandSender sender;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return false;
+        this.sender = sender;
+        return true;
     }
 
     @Override
@@ -17,6 +20,11 @@ public class stopLoop implements CommandHandler {
         return null;
     }
 
+
+    @Override
+    public CommandSender getSender() {
+        return this.sender;
+    }
 
     @Override
     public boolean canHandle(String[] args) {

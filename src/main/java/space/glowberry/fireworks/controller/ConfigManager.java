@@ -140,9 +140,9 @@ public class ConfigManager {
             }
             for (String colorName : fadeColors.keySet()) {
                 List<Integer> c = new ArrayList<>(3);
-                c.add(colors.get(colorName).getRed());
-                c.add(colors.get(colorName).getGreen());
-                c.add(colors.get(colorName).getBlue());
+                c.add(fadeColors.get(colorName).getRed());
+                c.add(fadeColors.get(colorName).getGreen());
+                c.add(fadeColors.get(colorName).getBlue());
                 this.config.set("points." + name + ".fade_colors." + colorName, c);
             }
 
@@ -169,6 +169,7 @@ public class ConfigManager {
             for (String pointName : pointNames) {
                 loop.addPoint(getPointByName(pointName));
             }
+            loop.setName(loopName);
             loop.setInterval(loopSection.getLong(loopName + ".interval"));
             loop.setLoopState(LoopState.valueOf(loopSection.getString(loopName + ".status")));
             loops.add(loop);

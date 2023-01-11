@@ -99,7 +99,7 @@ public class FireworkProperty {
             builder.withColor(this.colors.get(colorName));
         }
         for (String colorName : this.fadeColors.keySet()) {
-            builder.withFade(this.colors.get(colorName));
+            builder.withFade(this.fadeColors.get(colorName));
         }
         FireworkEffect effect = builder.build();
         meta.addEffect(effect);
@@ -113,18 +113,20 @@ public class FireworkProperty {
      * @param fadeColorNum The number of fade colors
      */
     public void randomize(int colorNum, int fadeColorNum){
+        Random random = new Random();
+        random.setSeed(2023L);
         Map<String, Color> colorMap = new HashMap<>();
         for (int i = 1; i < colorNum + 1; i++) {
             String name = "color_" + i;
             Color color = Color.fromRGB(
-                    (int) (Math.random() * 255),
-                    (int) (Math.random() * 255),
-                    (int) (Math.random() * 255)
+                    random.nextInt(256),
+                    random.nextInt(256),
+                    random.nextInt(256)
             );
             colorMap.put(name, color);
         }
         this.colors = colorMap;
-        colorMap.clear();
+        Map<String, Color> fadeColorMap = new HashMap<>();
         for (int i = 1; i < fadeColorNum + 1; i++) {
             String name = "fade_color_" + i;
             Color color = Color.fromRGB(
@@ -132,25 +134,31 @@ public class FireworkProperty {
                     (int) (Math.random() * 255),
                     (int) (Math.random() * 255)
             );
-            colorMap.put(name, color);
+            fadeColorMap.put(name, color);
         }
-        this.fadeColors = colorMap;
-        this.setPower((int) (1 + Math.random() * 5));
+        this.fadeColors = fadeColorMap;
+        this.setPower((int) (1 + Math.random() * 4));
         this.setTrail(new Random().nextBoolean());
         this.setFlicker(new Random().nextBoolean());
-        int x = new Random().nextInt(5);
+
+        int x = random.nextInt(5);
         switch (x){
             case 0:
                 this.setType(FireworkEffect.Type.BALL);
+                break;
             case 1:
                 this.setType(FireworkEffect.Type.BALL_LARGE);
+                break;
             case 2:
             default:
                 this.setType(FireworkEffect.Type.BURST);
+                break;
             case 3:
                 this.setType(FireworkEffect.Type.STAR);
+                break;
             case 4:
                 this.setType(FireworkEffect.Type.CREEPER);
+                break;
         }
 
     }
@@ -158,13 +166,15 @@ public class FireworkProperty {
     public void randomize(boolean RandomColorNumber, boolean RandomFadeColorNumber){
         int colorNum;
         int fadeColorNum;
+        Random random = new Random();
+        random.setSeed(2023L);
         if (RandomColorNumber){
-            colorNum = (int) (Math.random() * 20);
+            colorNum = random.nextInt(64) + 1;
         }else{
             colorNum = 10;
         }
         if (RandomFadeColorNumber){
-            fadeColorNum = (int) (Math.random() * 20);
+            fadeColorNum = random.nextInt(64) + 1;
         }else {
             fadeColorNum = 10;
         }

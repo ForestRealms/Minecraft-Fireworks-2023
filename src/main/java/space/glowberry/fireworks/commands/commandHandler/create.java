@@ -39,6 +39,13 @@ public class create implements CommandHandler {
         }
         Player player = (Player) sender;
         Location location = player.getLocation();
+        if (PointPool.getInstance().PointIsExist(args[1])) {
+            String message = Factory.getLanguage().getString("PointAlreadyExist");
+            assert message != null;
+            message = message.replaceAll("%pointName%", args[1]);
+            sender.sendMessage(translate(message));
+            return true;
+        }
         Point point = new Point(args[1], location);
         FireworkProperty property = new FireworkProperty();
         if(args.length == 2){
@@ -82,16 +89,15 @@ public class create implements CommandHandler {
 
 
     @Override
+    public CommandSender getSender() {
+        return sender;
+    }
+
+    @Override
     public boolean canHandle(String[] args) {
         String[] split = this.getClass().getName().split("\\.");
         String name = split[split.length - 1];
         return (Objects.equals(args[0], name) && (args.length == 2 || args.length == 3));
     }
 
-    @Override
-    public void sendHelp() {
-        String message = Factory.getLanguage().getString("helps.create");
-        assert message != null;
-        sender.sendMessage(translate(message));
-    }
 }

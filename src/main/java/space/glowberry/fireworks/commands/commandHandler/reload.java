@@ -7,14 +7,22 @@ import space.glowberry.fireworks.commands.CommandHandler;
 import java.util.List;
 
 public class reload implements CommandHandler {
+    private CommandSender sender;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return false;
+        this.sender = sender;
+        return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;
+    }
+
+    @Override
+    public CommandSender getSender() {
+        return this.sender;
     }
 
     @Override

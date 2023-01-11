@@ -1,6 +1,7 @@
 package space.glowberry.fireworks.classes;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PointPool extends Pool<Point>{
 
@@ -46,6 +47,36 @@ public class PointPool extends Pool<Point>{
             }
         }
         return null;
+    }
+
+    public List<Point> getPoints(Collection<String> point_names){
+        List<Point> p = new ArrayList<>();
+        for (String pointName : point_names) {
+            if(PointIsExist(pointName)){
+                p.add(getPoint(pointName));
+            }
+        }
+        return p;
+    }
+
+    public List<Point> getPoints(Collection<String> point_names, Class<? extends List> return_type) throws InstantiationException, IllegalAccessException {
+        List<Point> p = return_type.newInstance();
+        for (String pointName : point_names) {
+            if(PointIsExist(pointName)){
+                p.add(getPoint(pointName));
+            }
+        }
+        return p;
+    }
+
+
+    public boolean PointIsExist(String PointName){
+        for (Point point : getInstance().getAll()) {
+            if(point.getName().equals(PointName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<String> getNameList(){

@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class loops implements CommandHandler {
+
+    private CommandSender sender;
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // fw loops
-
-
+        this.sender = sender;
         return true;
     }
 
@@ -21,6 +22,11 @@ public class loops implements CommandHandler {
         return null;
     }
 
+
+    @Override
+    public CommandSender getSender() {
+        return this.sender;
+    }
 
     @Override
     public boolean canHandle(String[] args) {

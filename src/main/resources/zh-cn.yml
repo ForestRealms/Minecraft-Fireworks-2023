@@ -20,7 +20,7 @@ InvalidLoopStatus: "&c循环%loopName%的状态值无效！有效的值为：”
 helps:
   create: "&b/fw create <燃放点名称> [randomly]  &a创建一个烟花燃放点（randomly为可选参数）"
   launch: "&b/fw launch <烟花燃放点名称> [烟花燃放点名称...]  &a直接发射烟花燃放点（仅一次）"
-  createLoop: "&b/fw createLoop <循环名称> <燃放点> [燃放点] ...  &a创建新的循环"
+  createLoop: "&b/fw createLoop <循环名称> <interval=?> <燃放点> [燃放点] ...  &a创建新的循环"
   startLoop: "&b/fw startLoop <循环名称> [循环名称] ...  &a启动一个或多个循环"
   stopLoop: "&b/fw stopLoop <循环名称> [循环名称] ...  &a停止一个或多个循环"
   loops: "&b/fw loops  &a查看所有循环的状态"
@@ -29,6 +29,14 @@ helps:
 
 IO-Exception: "&c遇到I/O错误，请检查服务器！"
 success-on-create: "&a创建烟花燃放点%pointName%成功！"
+success-on-createLoop: "&a创建循环%loopName%成功！"
+success-on-startLoop: "&a启动循环%loopName%成功！"
+failed-on-createLoop: "&c创建循环%loopName%失败！"
 PlayerOnly: "&c仅游戏内玩家可执行此命令"
 NoPermission: "&c您没有执行此命令的权限"
 PointNotExist: "&c烟花燃放点%pointName%不存在！"
+PointAlreadyExist: "&c烟花燃放点%pointName%已存在，请勿重复创建！"
+LoopNotExist: "&c循环%loopName%不存在！"
+LoopAlreadyExist: "&c循环%loopName%已存在，请勿重复创建！"
+ZeroInterval: "&c燃放间隔时间非法"
+

@@ -16,13 +16,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class launch implements CommandHandler {
     // fw launch <name1> [name2] ...
+    private CommandSender sender;
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        this.sender = sender;
         List<String> pointNames = new CopyOnWriteArrayList<>(Arrays.asList(args));
         pointNames.remove("launch");
 
         for (String pointName : pointNames) {
-            if (!PointIsExist(pointName)) {
+            if (!PointPool.getInstance().PointIsExist(pointName)) {
                 String message = Factory.getLanguage().getString("PointNotExist");
                 assert message != null;
                 message = message.replaceAll("%pointName%", pointName);
@@ -49,13 +51,17 @@ public class launch implements CommandHandler {
         pointNames.remove("launch");
         List<String> nameList = PointPool.getInstance().getNameList();
         List<String> result = new LinkedList<>(nameList);
-        System.out.println(nameList);
         for (String pointName : pointNames) {
             result.remove(pointName);
         }
         return result;
     }
 
+
+    @Override
+    public CommandSender getSender() {
+        return sender;
+    }
 
     @Override
     public boolean canHandle(String[] args) {
@@ -66,15 +72,10 @@ public class launch implements CommandHandler {
 
     @Override
     public void sendHelp() {
-
+        String message = Factory.getLanguage().getString("helps.launch");
+        assert message != null;
+        sender.sendMessage(translate(message));
     }
 
-    private boolean PointIsExist(String PointName){
-        for (Point point : Main.configManager.getAllPoints()) {
-            if(point.getName().equals(PointName)){
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

@@ -2,6 +2,7 @@ package space.glowberry.fireworks;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import space.glowberry.fireworks.classes.LoopPool;
 import space.glowberry.fireworks.classes.PointPool;
 import space.glowberry.fireworks.commands.fw;
 import space.glowberry.fireworks.controller.ConfigManager;
@@ -26,6 +27,7 @@ public final class Main extends JavaPlugin {
         utils.OutputConsoleMessage(Factory.getLanguage().getString("CheckingConfigurationFile"));
         configManager = new ConfigManager(Factory.getConfig());
         PointPool.getInstance().addAll(configManager.getAllPoints());
+        LoopPool.getInstance().addAll(configManager.getAllLoops());
         RegisterCommands();
     }
 
