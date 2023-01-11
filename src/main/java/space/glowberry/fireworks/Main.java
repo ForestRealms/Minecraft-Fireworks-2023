@@ -7,7 +7,9 @@ import space.glowberry.fireworks.classes.PointPool;
 import space.glowberry.fireworks.commands.fw;
 import space.glowberry.fireworks.controller.ConfigManager;
 
+import javax.annotation.Nullable;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 
@@ -34,6 +36,15 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         utils.OutputConsoleMessage(utils.translate("&cDisabling Fireworks Plugin"));
+        Bukkit.getScheduler().cancelTasks(this);
+
+        try {
+            configManager.saveAllPoints();
+            configManager.saveAllLoops();
+        } catch (IOException e) {
+            String message = Factory.getLanguage().getString("IO-Exception");
+            utils.OutputConsoleMessage(utils.translate(message));
+        }
     }
 
     private void RegisterCommands(){

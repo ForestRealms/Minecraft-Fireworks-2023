@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import space.glowberry.fireworks.Exceptions.ZeroIntervalError;
 import space.glowberry.fireworks.Factory;
+import space.glowberry.fireworks.Main;
 import space.glowberry.fireworks.classes.Loop;
 import space.glowberry.fireworks.classes.LoopPool;
 import space.glowberry.fireworks.classes.PointPool;
@@ -80,7 +81,7 @@ public class createLoop implements CommandHandler {
         LoopPool.getInstance().add(loop);
 
         try {
-            LoopPool.getInstance().saveAllLoops();
+            Main.configManager.saveAllLoops();
             String message = Factory.getLanguage().getString("success-on-createLoop");
             assert message != null;
             message = message.replaceAll("%loopName%", loop.getName());

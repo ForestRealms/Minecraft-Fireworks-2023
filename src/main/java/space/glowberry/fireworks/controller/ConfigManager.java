@@ -177,5 +177,19 @@ public class ConfigManager {
         return loops;
     }
 
+    public void saveAllLoops() throws IOException {
+        for (Loop loop : LoopPool.getInstance().getAll()) {
+            String loopName = loop.getName();
+            List<String> pointNames = new ArrayList<>(LoopPool.getInstance().getAll().size());
+            for (Point point : loop.getPoints()) {
+                pointNames.add(point.getName());
+            }
+            Factory.getConfig().set("loops." + loopName + ".points", pointNames);
+            Factory.getConfig().set("loops." + loopName + ".interval", loop.getInterval());
+            Factory.getConfig().set("loops." + loopName + ".status", loop.getLoopState().toString());
+            Factory.saveConfig();
+        }
+    }
+
 
 }

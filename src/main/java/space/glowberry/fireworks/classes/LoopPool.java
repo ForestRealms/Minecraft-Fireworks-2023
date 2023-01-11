@@ -64,19 +64,7 @@ public class LoopPool extends Pool<Loop>{
         this.loops.addAll(loops);
     }
 
-    public void saveAllLoops() throws IOException {
-        for (Loop loop : this.loops) {
-            String loopName = loop.getName();
-            List<String> pointNames = new ArrayList<>(loops.size());
-            for (Point point : loop.getPoints()) {
-                pointNames.add(point.getName());
-            }
-            Factory.getConfig().set("loops." + loopName + ".points", pointNames);
-            Factory.getConfig().set("loops." + loopName + ".interval", loop.getInterval());
-            Factory.getConfig().set("loops." + loopName + ".status", loop.getLoopState().toString());
-            Factory.saveConfig();
-        }
-    }
+
 
     /**
      * To check if the loop with a specific name is existed
