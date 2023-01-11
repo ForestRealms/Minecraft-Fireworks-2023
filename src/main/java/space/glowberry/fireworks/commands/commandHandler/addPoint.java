@@ -84,7 +84,7 @@ public class addPoint implements CommandHandler {
                 Main.configManager.saveAllLoops();
             } catch (IOException e) {
                 String message = Factory.getLanguage().getString("IO-Exception");
-                sender.sendMessage(translate(message));`
+                sender.sendMessage(translate(message));
             }
         }
 

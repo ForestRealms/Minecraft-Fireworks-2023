@@ -24,6 +24,7 @@ helps:
   startLoop: "&b/fw startLoop <循环名称> [循环名称] ...  &a启动一个或多个循环"
   stopLoop: "&b/fw stopLoop <循环名称> [循环名称] ...  &a停止一个或多个循环"
   loops: "&b/fw loops  &a查看所有循环的状态"
+  addPoints: "/&b/fw addPoint <loopName> <pointName1> [pointName2] ...  &a向循环中添加一个燃放点"
   update: "&b/fw update  &a检查更新"
   help: "&b/fw help  &a显示此帮助菜单"
 
