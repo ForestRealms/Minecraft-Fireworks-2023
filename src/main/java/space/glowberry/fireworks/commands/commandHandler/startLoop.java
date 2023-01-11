@@ -86,8 +86,4 @@ public class startLoop implements CommandHandler {
         return (Objects.equals(args[0], name) && (args.length >= 2));
     }
 
-    @Override
-    public void sendHelp() {
-
-    }
 }
