@@ -41,4 +41,10 @@ LoopNotExist: "&c循环%loopName%不存在！"
 LoopAlreadyExist: "&c循环%loopName%已存在，请勿重复创建！"
 ZeroInterval: "&c燃放间隔时间非法"
 ReloadComplete: "&a重载完毕！"
+loops:
+  - "&a ===================="
+  - "&b 循环名称： &e%loopName%"
+  - "&b 包含的燃放点： &e%pointNames%"
+  - "&b 间隔： &e%ticks%游戏刻(ticks)(约等于%second%秒)"
+  - "&b 循环状态： &e%loopState%"
 

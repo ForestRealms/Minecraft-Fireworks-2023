@@ -9,12 +9,6 @@ import java.io.IOException;
 
 public class utils {
 
-    private static final String version = "2.0-Beta";
-
-    public static String getVersion(){
-        return version;
-    }
-
 
     /**
      * Translate the message string with alternative char "&"
