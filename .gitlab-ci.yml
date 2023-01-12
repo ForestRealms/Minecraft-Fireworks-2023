@@ -26,12 +26,11 @@ default:
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-development_build_1.14.3:
-  stage: build
+build_1.14.3:
+  stage: build_1.14.3
   script:
     - mvn clean package --file ./pom-1.14.3.xml
     - echo "1.14.3 编译完成"
-  only: [develop]
   tags:
     - Maven
   artifacts:
@@ -41,12 +40,11 @@ development_build_1.14.3:
     when: on_success
     expire_in: 1 hours
 
-development_build_1.15.2:
-  stage: build
+build_1.15.2:
+  stage: build_1.15.2
   script:
     - mvn clean package --file ./pom-1.15.2.xml
     - echo "1.14.3 编译完成"
-  only: [develop]
   tags:
     - Maven
   artifacts:
@@ -56,12 +54,11 @@ development_build_1.15.2:
     when: on_success
     expire_in: 1 hours
 
-development_build_1.16.5:
-  stage: build
+build_1.16.5:
+  stage: build_1.16.5
   script:
     - mvn clean package --file ./pom-1.16.5.xml
     - echo "1.16.5 编译完成"
-  only: [develop]
   tags:
     - Maven
   artifacts:
@@ -71,12 +68,11 @@ development_build_1.16.5:
     when: on_success
     expire_in: 1 hours
 
-development_build_1.17.1:
-  stage: build
+build_1.17.1:
+  stage: build_1.17.1
   script:
     - mvn clean package --file ./pom-1.17.1.xml
     - echo "1.17.1 编译完成"
-  only: [develop]
   tags:
     - Maven
   artifacts:
@@ -86,12 +82,11 @@ development_build_1.17.1:
     when: on_success
     expire_in: 1 hours
 
-development_build_1.18.2:
-  stage: build
+build_1.18.2:
+  stage: build_1.18.2
   script:
     - mvn clean package --file ./pom-1.18.2.xml
     - echo "1.18.2 编译完成"
-  only: [develop]
   tags:
     - Maven
   artifacts:
@@ -101,12 +96,11 @@ development_build_1.18.2:
     when: on_success
     expire_in: 1 hours
 
-development_build_1.19.3:
-  stage: build
+build_1.19.3:
+  stage: build_1.19.3
   script:
     - mvn clean package --file ./pom-1.19.3.xml
     - echo "1.19.3 编译完成"
-  only: [develop]
   tags:
     - Maven
   artifacts:
@@ -119,21 +113,4 @@ development_build_1.19.3:
 
 
 
-
-build:       # This job runs in the build stage, which runs first.
-  stage: build
-  image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
-  script:
-    - mvn clean package
-    - echo "开发版本编译完成"
-  only: [master]
-  tags:
-    - Maven
-  artifacts:
-    paths:
-      - "./target/*.jar"
-    exclude:
-      - "./target/original-*.jar"
-    when: on_success
-    expire_in: 7 days
 
