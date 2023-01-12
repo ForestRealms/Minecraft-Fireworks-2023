@@ -7,7 +7,6 @@ import space.glowberry.fireworks.classes.PointPool;
 import space.glowberry.fireworks.commands.fw;
 import space.glowberry.fireworks.controller.ConfigManager;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
