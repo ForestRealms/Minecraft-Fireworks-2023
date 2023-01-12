@@ -8,28 +8,29 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import space.glowberry.fireworks.Exceptions.InvalidConfigurationFile;
 import space.glowberry.fireworks.Factory;
-import space.glowberry.fireworks.Main;
 import space.glowberry.fireworks.classes.*;
 import space.glowberry.fireworks.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ConfigManager {
 
 
 
     private final YamlConfiguration config;
-
+    private final boolean valid;
 
     public ConfigManager(YamlConfiguration config) {
         ConfigChecker checker = new ConfigChecker(config);
         List<InvalidConfigurationFile> check = checker.check();
         if(check.size() == 0){
             this.config = config;
+            this.valid = true;
         }else{
             this.config = null;
+            this.valid = false;
         }
         String completeCheckingConfigurationFileMessage =
                 Factory.getLanguage().getString("CompleteCheckingConfigurationFile");
@@ -43,6 +44,9 @@ public class ConfigManager {
 
     }
 
+    public boolean isValid() {
+        return valid;
+    }
 
     /**
      * Get the color (or fade color) list in terms of the name of a fireworks point
@@ -160,7 +164,7 @@ public class ConfigManager {
     }
 
     public List<Loop> getAllLoops(){
-        List<Loop> loops = new ArrayList<>();
+        List<Loop> loops = new CopyOnWriteArrayList<>();
         ConfigurationSection loopSection = this.config.getConfigurationSection("loops");
         assert loopSection != null;
         for (String loopName : loopSection.getKeys(false)) {

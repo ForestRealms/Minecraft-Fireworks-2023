@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class addPoint implements CommandHandler {
+public class removePoint implements CommandHandler {
 
     private CommandSender sender;
     @Override
@@ -28,11 +28,10 @@ public class addPoint implements CommandHandler {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // /fw addPoint <loopName> <pointName1> [pointName2] ...
+        // /fw removePoint <loopName> <pointName1> [pointName2] ...
         this.sender = sender;
 
-        if(args.length == 2){
-            System.out.println(1111111);
+        if(args.length == 1 || args.length == 2){
             sendHelp();
             return true;
         }
@@ -74,17 +73,21 @@ public class addPoint implements CommandHandler {
             pointNameList.add(point.getName());
         }
 
+        if(pointNameList.size() >= loop.getPointNameList().size()){
+            sender.sendMessage(translate(Factory.getLanguage().getString("AtLeastOneOfPointShouldBeReserved")));
+            return true;
+        }
+
         for (String pointName : pointNames) {
-            Point point = PointPool.getInstance().getPoint(pointName);
-            if(pointNameList.contains(pointName)){
-                String message = Factory.getLanguage().getString("PointAlreadyExistInLoop");
+            if(!pointNameList.contains(pointName)){
+                String message = Factory.getLanguage().getString("PointNotExistInLoop");
                 assert message != null;
                 message = message.replaceAll("%pointName%", pointName).replaceAll("%loopName%", loopName);
                 sender.sendMessage(translate(message));
                 continue;
             }
-            loop.addPoint(point);
-            String message = Factory.getLanguage().getString("success-on-addPoint");
+            loop.removePoint(pointName);
+            String message = Factory.getLanguage().getString("success-on-removePoint");
             assert message != null;
             message = message.replaceAll("%loopName%", loopName).replaceAll("%pointName%", pointName);
             sender.sendMessage(translate(message));
@@ -103,19 +106,22 @@ public class addPoint implements CommandHandler {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // /fw addPoint <loopName> <pointName1> [pointName2] ...
-
-
 
         if(args.length == 2){
             return LoopPool.getInstance().getNameList();
         }
 
         if(args.length >= 3){
+            Loop loop = LoopPool.getInstance().getLoop(args[1]);
+            if(loop == null){
+                return null;
+            }
             List<String> pointNames = new LinkedList<>(Arrays.asList(args));
             pointNames.remove(0);
             pointNames.remove(0);
-            List<String> nameList = PointPool.getInstance().getNameList();
+
+
+            List<String> nameList = loop.getPointNameList();
             List<String> result = new LinkedList<>(nameList);
             for (String pointName : pointNames) {
                 result.remove(pointName);

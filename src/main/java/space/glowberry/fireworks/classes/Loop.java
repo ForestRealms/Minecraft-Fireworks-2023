@@ -6,6 +6,7 @@ import space.glowberry.fireworks.Main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Loop {
     private final List<Point> points;
@@ -36,7 +37,7 @@ public class Loop {
     }
 
     public Loop() {
-        this.points = new ArrayList<>();
+        this.points = new CopyOnWriteArrayList<>();
     }
 
     public void setName(String name) {
@@ -93,6 +94,15 @@ public class Loop {
                 removePoint(point);
             }
         }
+    }
+
+    public List<String> getPointNameList(){
+        List<String> result = new ArrayList<>();
+        for (Point point : this.points) {
+            result.add(point.getName());
+        }
+
+        return result;
     }
 
     @Override

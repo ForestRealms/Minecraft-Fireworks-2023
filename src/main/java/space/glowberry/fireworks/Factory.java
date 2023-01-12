@@ -53,6 +53,7 @@ public class Factory {
             handlers.add(new stopLoop());
             handlers.add(new update());
             handlers.add(new addPoint());
+            handlers.add(new removePoint());
             CommandHandlers = handlers;
         }
 

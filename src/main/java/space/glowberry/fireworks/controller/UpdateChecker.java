@@ -1,7 +1,5 @@
 package space.glowberry.fireworks.controller;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.junit.jupiter.api.Test;
 
 import java.io.*;
 

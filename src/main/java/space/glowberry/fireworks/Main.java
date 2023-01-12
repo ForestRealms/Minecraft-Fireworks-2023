@@ -28,6 +28,10 @@ public final class Main extends JavaPlugin {
         saveResource("default.yml", false);
         utils.OutputConsoleMessage(Factory.getLanguage().getString("CheckingConfigurationFile"));
         configManager = new ConfigManager(Factory.getConfig());
+        if(!configManager.isValid()){
+            utils.OutputConsoleMessage(Factory.getLanguage().getString("InvalidConfig-ShutDown"));
+            this.onDisable();
+        }
         PointPool.getInstance().addAll(configManager.getAllPoints());
         LoopPool.getInstance().addAll(configManager.getAllLoops());
         RegisterCommands();
