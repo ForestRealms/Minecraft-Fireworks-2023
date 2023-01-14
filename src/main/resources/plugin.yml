@@ -1,7 +1,7 @@
 name: Minecraft-Fireworks
 version: '${project.version}'
 main: space.glowberry.fireworks.Main
-api-version: 1.18
+api-version: 1.14
 prefix: MCfW
 authors: [ Glowberry ]
 description: A minecraft plugin makes fireworks easier
