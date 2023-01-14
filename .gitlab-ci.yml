@@ -27,6 +27,7 @@ stages:          # List of stages for jobs, and their order of execution
   - build
 
 build_1.14.3:
+  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.14.3.xml
@@ -38,9 +39,10 @@ build_1.14.3:
     paths:
       - "./target/*.jar"
     when: on_success
-    expire_in: 1 hours
+    expire_in: 90 days
 
 build_1.15.2:
+  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.15.2.xml
@@ -52,9 +54,10 @@ build_1.15.2:
     paths:
       - "./target/*.jar"
     when: on_success
-    expire_in: 1 hours
+    expire_in: 90 days
 
 build_1.16.5:
+  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.16.5.xml
@@ -66,9 +69,10 @@ build_1.16.5:
     paths:
       - "./target/*.jar"
     when: on_success
-    expire_in: 1 hours
+    expire_in: 90 days
 
 build_1.17.1:
+  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.17.1.xml
@@ -80,9 +84,10 @@ build_1.17.1:
     paths:
       - "./target/*.jar"
     when: on_success
-    expire_in: 1 hours
+    expire_in: 90 days
 
 build_1.18.2:
+  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.18.2.xml
@@ -94,9 +99,10 @@ build_1.18.2:
     paths:
       - "./target/*.jar"
     when: on_success
-    expire_in: 1 hours
+    expire_in: 90 days
 
 build_1.19.3:
+  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.19.3.xml
@@ -108,9 +114,99 @@ build_1.19.3:
     paths:
       - "./target/*.jar"
     when: on_success
-    expire_in: 1 hours
+    expire_in: 90 days
   
 
+
+build_1.14.3_dev:
+  except: [master]
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.14.3.xml
+    - echo "1.14.3 编译完成"
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.14.3)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 90 days
+
+build_1.15.2_dev:
+  except: [master]
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.15.2.xml
+    - echo "1.15.2 编译完成"
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.15.2)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 90 days
+
+build_1.16.5_dev:
+  except: [master]
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.16.5.xml
+    - echo "1.16.5 编译完成"
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.16.5)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 90 days
+
+build_1.17.1_dev:
+  except: [master]
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.17.1.xml
+    - echo "1.17.1 编译完成"
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.17.1)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 90 days
+
+build_1.18.2_dev:
+  except: [master]
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.18.2.xml
+    - echo "1.18.2 编译完成"
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.18.2)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 90 days
+
+build_1.19.3_dev:
+  except: [master]
+  stage: build
+  script:
+    - mvn clean package --file ./pom-1.19.3.xml
+    - echo "1.19.3 编译完成"
+  tags:
+    - Maven
+  artifacts:
+    name: "$NAME $VERSION (1.19.3)"
+    paths:
+      - "./target/*.jar"
+    when: on_success
+    expire_in: 90 days
 
 
 
