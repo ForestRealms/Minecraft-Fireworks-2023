@@ -24,15 +24,11 @@ default:
   image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
 
 stages:          # List of stages for jobs, and their order of execution
-  - build_1.14.3
-  - build_1.15.2
-  - build_1.16.5
-  - build_1.17.1
-  - build_1.18.2
-  - build_1.19.3
+  - build
+  - release
 
 build_1.14.3:
-  stage: build_1.14.3
+  stage: build
   script:
     - mvn clean package --file ./pom-1.14.3.xml
     - echo "1.14.3 编译完成"
@@ -46,7 +42,7 @@ build_1.14.3:
     expire_in: 1 hours
 
 build_1.15.2:
-  stage: build_1.15.2
+  stage: build
   script:
     - mvn clean package --file ./pom-1.15.2.xml
     - echo "1.15.2 编译完成"
@@ -60,7 +56,7 @@ build_1.15.2:
     expire_in: 1 hours
 
 build_1.16.5:
-  stage: build_1.16.5
+  stage: build
   script:
     - mvn clean package --file ./pom-1.16.5.xml
     - echo "1.16.5 编译完成"
@@ -74,7 +70,7 @@ build_1.16.5:
     expire_in: 1 hours
 
 build_1.17.1:
-  stage: build_1.17.1
+  stage: build
   script:
     - mvn clean package --file ./pom-1.17.1.xml
     - echo "1.17.1 编译完成"
@@ -88,7 +84,7 @@ build_1.17.1:
     expire_in: 1 hours
 
 build_1.18.2:
-  stage: build_1.18.2
+  stage: build
   script:
     - mvn clean package --file ./pom-1.18.2.xml
     - echo "1.18.2 编译完成"
@@ -102,7 +98,7 @@ build_1.18.2:
     expire_in: 1 hours
 
 build_1.19.3:
-  stage: build_1.19.3
+  stage: build
   script:
     - mvn clean package --file ./pom-1.19.3.xml
     - echo "1.19.3 编译完成"
@@ -115,6 +111,14 @@ build_1.19.3:
     when: on_success
     expire_in: 1 hours
   
+Release_Job:
+  stage: release
+  script:
+    - echo "Running the release job."
+  release:
+    tag_name: v2.0-Beta
+    name: 'Release v2.0-Beta'
+    description: 'Release Test'
 
 
 
