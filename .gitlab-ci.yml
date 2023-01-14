@@ -25,7 +25,6 @@ default:
 
 stages:          # List of stages for jobs, and their order of execution
   - build
-  - release
 
 build_1.14.3:
   stage: build
@@ -111,17 +110,7 @@ build_1.19.3:
     when: on_success
     expire_in: 1 hours
   
-Release_Job:
-  stage: release
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
-  script:
-    - echo "Running the release job."
-  release:
-    tag_name: v$VERSION
-    name: 'Release v$VERSION'
-    description: 'Please step into Pipeline for download *.jar file'
-  tags:
-    - Maven
+
 
 
 
