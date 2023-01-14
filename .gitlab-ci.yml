@@ -119,6 +119,8 @@ Release_Job:
     tag_name: v2.0-Beta
     name: 'Release v2.0-Beta'
     description: 'Release Test'
+  tags:
+    - Maven
 
 
 
