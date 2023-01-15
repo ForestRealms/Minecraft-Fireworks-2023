@@ -17,197 +17,193 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 variables:
-  NAME: "Minecraft Fireworks"
-  VERSION: "2.0-Beta"
+  NAME: "Minecraft-Fireworks"
+  VERSION: "2.0.0"
+  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${NAME}/${VERSION}"
+  MC_1_14_3: "${PACKAGE_REGISTRY_URL}/${NAME}_${VERSION}_1.14.3.jar"
+  MC_1_15_2: "${PACKAGE_REGISTRY_URL}/${NAME}_${VERSION}_1.15.2.jar"
+  MC_1_16_5: "${PACKAGE_REGISTRY_URL}/${NAME}_${VERSION}_1.16.5.jar"
+  MC_1_17_1: "${PACKAGE_REGISTRY_URL}/${NAME}_${VERSION}_1.17.1.jar"
+  MC_1_18_2: "${PACKAGE_REGISTRY_URL}/${NAME}_${VERSION}_1.18.2.jar"
+  MC_1_19_3: "${PACKAGE_REGISTRY_URL}/${NAME}_${VERSION}_1.19.3.jar"
 
 default:
-  image: registry-vpc.cn-zhangjiakou.aliyuncs.com/glowberry/spigot:20230107
+  image: 127.0.0.1:5000/spigot
 
 stages:          # List of stages for jobs, and their order of execution
   - build
+  - upload
+  - release
 
 build_1.14.3:
-  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.14.3.xml
+    - mkdir ./1.14.3
+    - rm -rf ./target/original*.jar
+    - mv ./target/*.jar ./1.14.3
     - echo "1.14.3 编译完成"
   tags:
     - Maven
   artifacts:
     name: "$NAME $VERSION (1.14.3)"
     paths:
-      - "./target/*.jar"
+      - "./1.14.3/*.jar"
     when: on_success
+    exclude:
+      - "./1.14.3/original**.jar"
     expire_in: 90 days
+  dependencies: []
 
 build_1.15.2:
-  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.15.2.xml
+    - mkdir ./1.15.2
+    - rm -rf ./target/original*.jar
+    - mv ./target/*.jar ./1.15.2
     - echo "1.15.2 编译完成"
   tags:
     - Maven
   artifacts:
     name: "$NAME $VERSION (1.15.2)"
     paths:
-      - "./target/*.jar"
+      - "./1.15.2/*.jar"
     when: on_success
     expire_in: 90 days
+    exclude:
+      - "./1.15.2/original**.jar"
+  dependencies: []
 
 build_1.16.5:
-  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.16.5.xml
+    - mkdir ./1.16.5
+    - rm -rf ./target/original*.jar
+    - mv ./target/*.jar ./1.16.5
     - echo "1.16.5 编译完成"
   tags:
     - Maven
   artifacts:
     name: "$NAME $VERSION (1.16.5)"
     paths:
-      - "./target/*.jar"
+      - "./1.16.5/*.jar"
     when: on_success
     expire_in: 90 days
+    exclude:
+      - "./1.16.5/original**.jar"
+  dependencies: []
 
 build_1.17.1:
-  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.17.1.xml
+    - mkdir ./1.17.1
+    - rm -rf ./target/original*.jar
+    - mv ./target/*.jar ./1.17.1
     - echo "1.17.1 编译完成"
   tags:
     - Maven
   artifacts:
     name: "$NAME $VERSION (1.17.1)"
     paths:
-      - "./target/*.jar"
+      - "./1.17.1/*.jar"
     when: on_success
     expire_in: 90 days
+    exclude:
+      - "./1.17.1/original**.jar"
+  dependencies: []
 
 build_1.18.2:
-  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.18.2.xml
+    - mkdir ./1.18.2
+    - rm -rf ./target/original*.jar
+    - mv ./target/*.jar ./1.18.2
     - echo "1.18.2 编译完成"
   tags:
     - Maven
   artifacts:
     name: "$NAME $VERSION (1.18.2)"
     paths:
-      - "./target/*.jar"
+      - "./1.18.2/*.jar"
     when: on_success
     expire_in: 90 days
+    exclude:
+      - "./1.18.2/original**.jar"
+  dependencies: []
 
 build_1.19.3:
-  only: [master]
   stage: build
   script:
     - mvn clean package --file ./pom-1.19.3.xml
+    - mkdir ./1.19.3
+    - rm -rf ./target/original*.jar
+    - mv ./target/*.jar ./1.19.3
     - echo "1.19.3 编译完成"
   tags:
     - Maven
   artifacts:
     name: "$NAME $VERSION (1.19.3)"
     paths:
-      - "./target/*.jar"
+      - "./1.19.3/*.jar"
     when: on_success
     expire_in: 90 days
-  
+    exclude:
+      - "./1.19.3/original**.jar"
+  dependencies: []
 
-
-build_1.14.3_dev:
-  except: [master]
-  stage: build
+Upload:
+  stage: upload
+  tags:
+    - Upload
   script:
-    - mvn clean package --file ./pom-1.14.3.xml
-    - echo "1.14.3 编译完成"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "./1.14.3/${NAME}-${VERSION}.jar" "${MC_1_14_3}"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "./1.15.2/${NAME}-${VERSION}.jar" "${MC_1_15_2}"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "./1.16.5/${NAME}-${VERSION}.jar" "${MC_1_16_5}"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "./1.17.1/${NAME}-${VERSION}.jar" "${MC_1_17_1}"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "./1.18.2/${NAME}-${VERSION}.jar" "${MC_1_18_2}"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "./1.19.3/${NAME}-${VERSION}.jar" "${MC_1_19_3}"
+
+release_Job:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never                                  # Do not run this job in a tag pipeline
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH  # Run this job when commits are pushed or merged to the default branch
+  release:
+    tag_name: "v${VERSION}"
+    description: Release Test
+    assets:
+      links:
+        - name: "For Minecraft 1.14.3"
+          url: "${MC_1_14_3}"
+          link_type: package
+        - name: "For Minecraft 1.15.2"
+          url: "${MC_1_15_2}"
+          link_type: package
+        - name: "For Minecraft 1.16.5"
+          url: "${MC_1_16_5}"
+          link_type: package
+        - name: "For Minecraft 1.17.1"
+          url: "${MC_1_17_1}"
+          link_type: package
+        - name: "For Minecraft 1.18.2"
+          url: "${MC_1_18_2}"
+          link_type: package
+        - name: "For Minecraft 1.19.3"
+          url: "${MC_1_19_3}"
+          link_type: package
+  script:
+    - "echo 发布"
   tags:
     - Maven
-  artifacts:
-    name: "$NAME $VERSION (1.14.3)"
-    paths:
-      - "./target/*.jar"
-    when: on_success
-    expire_in: 90 days
-
-build_1.15.2_dev:
-  except: [master]
-  stage: build
-  script:
-    - mvn clean package --file ./pom-1.15.2.xml
-    - echo "1.15.2 编译完成"
-  tags:
-    - Maven
-  artifacts:
-    name: "$NAME $VERSION (1.15.2)"
-    paths:
-      - "./target/*.jar"
-    when: on_success
-    expire_in: 90 days
-
-build_1.16.5_dev:
-  except: [master]
-  stage: build
-  script:
-    - mvn clean package --file ./pom-1.16.5.xml
-    - echo "1.16.5 编译完成"
-  tags:
-    - Maven
-  artifacts:
-    name: "$NAME $VERSION (1.16.5)"
-    paths:
-      - "./target/*.jar"
-    when: on_success
-    expire_in: 90 days
-
-build_1.17.1_dev:
-  except: [master]
-  stage: build
-  script:
-    - mvn clean package --file ./pom-1.17.1.xml
-    - echo "1.17.1 编译完成"
-  tags:
-    - Maven
-  artifacts:
-    name: "$NAME $VERSION (1.17.1)"
-    paths:
-      - "./target/*.jar"
-    when: on_success
-    expire_in: 90 days
-
-build_1.18.2_dev:
-  except: [master]
-  stage: build
-  script:
-    - mvn clean package --file ./pom-1.18.2.xml
-    - echo "1.18.2 编译完成"
-  tags:
-    - Maven
-  artifacts:
-    name: "$NAME $VERSION (1.18.2)"
-    paths:
-      - "./target/*.jar"
-    when: on_success
-    expire_in: 90 days
-
-build_1.19.3_dev:
-  except: [master]
-  stage: build
-  script:
-    - mvn clean package --file ./pom-1.19.3.xml
-    - echo "1.19.3 编译完成"
-  tags:
-    - Maven
-  artifacts:
-    name: "$NAME $VERSION (1.19.3)"
-    paths:
-      - "./target/*.jar"
-    when: on_success
-    expire_in: 90 days
-
-
-
-
